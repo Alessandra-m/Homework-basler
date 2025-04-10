@@ -34,6 +34,7 @@ def main() -> None:
   pub_frequency: int = rospy.get_param("~rate", ROS_PARAM_PUB_RATE)
 
   # Q: Почему здесь не нужно писать rospy.resolve_name(ROS_IMAGE_TOPIC)?
+  # Ответ: rospy.Publisher сам обрабатывает разрешение имен
   publisher = rospy.Publisher(ROS_IMAGE_TOPIC, Image, queue_size=10)
   # subscriber = rospy.Subscriber("pylon_camera_node/image_raw", Image, cam_callback)
   # Обратите внимание: топик "image" может переименоваться при запуске ROS-узла.

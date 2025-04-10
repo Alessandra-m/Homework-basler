@@ -25,6 +25,9 @@ ROS_IMAGE_TOPIC: Final[str] = "image"
 def image_callback(msg: Image, cv_bridge: CvBridge) -> None:
   # конвертация ROS-сообщения в OpenCV изображение
   # Q: Каков формат у изображения?
+  # Формат изображения, полученный через cv_bridge.imgmsg_to_cv2(msg), 
+  # зависит от исходного encoding в ROS-сообщении (sensor_msgs/Image).
+  # у нас при публикации используется encoding="mono8"
   image = cv_bridge.imgmsg_to_cv2(msg)
   
   # Задание 2: Реализуйте отображение полученного изображения.
@@ -50,6 +53,7 @@ def main() -> None:
   rospy.Subscriber(ROS_IMAGE_TOPIC, Image, lambda msg: image_callback(msg, cv_bridge), queue_size=None)
 
   # Q: Что происходит в данной строчке кода?
+  # это простой способ оставить узел активным для обработки
   rospy.spin()
 
   cv2.destroyAllWindows()
